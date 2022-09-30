@@ -1,6 +1,5 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
-
 import TeamCard from '../TeamCard'
 
 import './index.css'
@@ -9,7 +8,7 @@ const teamsApiUrl = 'https://apis.ccbp.in/ipl'
 
 class Home extends Component {
   state = {
-    isLoading: true,
+    isLoading: false,
     teamsData: [],
   }
 
@@ -17,15 +16,23 @@ class Home extends Component {
     this.getTeams()
   }
 
+  componentDidUpdate(prevState) {
+    const {teamsData} = this.state
+    if (prevState.teamsData !== teamsData) {
+      console.log('Data', teamsData)
+    }
+  }
+
   getTeams = async () => {
-    const response = await fetch('https://apis.ccbp.in/ipl')
+    const response = await fetch(teamsApiUrl)
     const fetchedData = await response.json()
+    console.log('data', fetchedData)
     const formattedData = fetchedData.teams.map(team => ({
       name: team.name,
       id: team.id,
       teamImageURL: team.team_image_url,
     }))
-    console.log('kk', formattedData)
+
     this.setState({
       teamsData: formattedData,
       isLoading: false,
@@ -34,11 +41,10 @@ class Home extends Component {
 
   renderTeamsList = () => {
     const {teamsData} = this.state
-
     return (
       <ul className="teams-list">
-        {teamsData.map(eachItem => (
-          <TeamCard teamDetails={eachItem} key={eachItem.id} />
+        {teamsData.map(team => (
+          <TeamCard teamDetails={team} key={team.id} />
         ))}
       </ul>
     )

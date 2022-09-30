@@ -57,7 +57,7 @@ class TeamMatches extends Component {
     return (
       <ul className="recent-matches-list">
         {recentMatches.map(recentMatch => (
-          <MatchCard matchDetails={recentMatch} key={recentMatch.id} />
+          <MatchCard matchDetails={recentMatch} />
         ))}
       </ul>
     )
@@ -70,7 +70,7 @@ class TeamMatches extends Component {
     return (
       <ul className="responsive-container">
         <img src={teamBannerURL} alt="team banner" className="team-banner" />
-        <LatestMatch latestMatchData={latestMatch} />
+        <LatestMatch latestMatchData={latestMatch} key="date" />
         {this.renderRecentMatchesList()}
       </ul>
     )
