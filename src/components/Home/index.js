@@ -16,13 +16,6 @@ class Home extends Component {
     this.getTeams()
   }
 
-  componentDidUpdate(prevState) {
-    const {teamsData} = this.state
-    if (prevState.teamsData !== teamsData) {
-      console.log('Data', teamsData)
-    }
-  }
-
   getTeams = async () => {
     const response = await fetch(teamsApiUrl)
     const fetchedData = await response.json()
@@ -43,6 +36,11 @@ class Home extends Component {
     const {teamsData} = this.state
     return (
       <ul className="teams-list">
+        {teamsData.length < 1 && (
+          <div testid="loader">
+            <Loader />
+          </div>
+        )}
         {teamsData.map(team => (
           <TeamCard teamDetails={team} key={team.id} />
         ))}

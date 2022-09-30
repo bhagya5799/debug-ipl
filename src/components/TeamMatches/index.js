@@ -47,7 +47,7 @@ class TeamMatches extends Component {
       ),
     }
 
-    this.setState({teamMatchesData: formattedData, isLoading: true})
+    this.setState({teamMatchesData: formattedData, isLoading: false})
   }
 
   renderRecentMatchesList = () => {
@@ -68,11 +68,11 @@ class TeamMatches extends Component {
     const {teamBannerURL, latestMatch} = teamMatchesData
 
     return (
-      <ul className="responsive-container">
+      <div className="responsive-container">
         <img src={teamBannerURL} alt="team banner" className="team-banner" />
-        <LatestMatch latestMatchData={latestMatch} key="date" />
+        <LatestMatch latestMatchData={latestMatch} key={latestMatch.id} />
         {this.renderRecentMatchesList()}
-      </ul>
+      </div>
     )
   }
 
